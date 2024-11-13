@@ -1,9 +1,17 @@
 name: Publish Experimental Packages
 
 on:
-  push:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      package_dir:
+        description: 'Directory of the package to publish'
+        required: false
+        default: './'
+        type: string
+    secrets:
+      NPM_TOKEN_READ_AND_WRITE:
+        description: 'NPM token with read and write permissions'
+        required: true
 
 jobs:
   deploy:
@@ -38,10 +46,18 @@ jobs:
           cd ${{ inputs.package_dir }}
           echo "PACKAGE_NAME=$(jq -r .name package.json)" >> $GITHUB_ENV
 
-  bump_package:
-    needs: deploy  # Ensures this job runs after 'deploy'
-    uses: ./.github/workflows/bump-version.yml
-    with:
-      package_dir: './'  # Adjust if necessary
-    secrets:
-      NPM_TOKEN_READ_AND_WRITE: ${{ secrets.NPM_TOKEN_READ_AND_WRITE }}
+      - name: Bump Package
+        uses: ./.github/workflows/bump-version
+
+      - name: Comment on PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          comment_tag: packages_announcement
+          message: |
+            Released an experimental package:
+
+            ```bash
+            bun add ${{ env.PACKAGE_NAME }}@${{ env.VERSION_TAG }}
+            ```
+
+            This package will be removed after the pull request has been merged.
