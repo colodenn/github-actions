@@ -39,15 +39,16 @@ jobs:
 
       - name: Build Package
         run: bun run build
-
+        
+      - name: Bump Package
+        uses: ./.github/workflows/bump-version
+        
       - name: Get package name from package.json
         id: package-name
         run: |
           cd ${{ inputs.package_dir }}
           echo "PACKAGE_NAME=$(jq -r .name package.json)" >> $GITHUB_ENV
 
-      - name: Bump Package
-        uses: ../.github/workflows/bump-version
 
       - name: Comment on PR
         uses: thollander/actions-comment-pull-request@v2
