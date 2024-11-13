@@ -36,7 +36,7 @@ jobs:
         uses: tibdex/github-app-token@v1
         with:
           app_id: ${{ secrets.ORG_GH_APP_ID }}
-          private_key: ${{ secrets.ORG_GHAPP_PRIVATE_KEY }}
+          private_key: ${{ secrets.ORG_GH_APP_PRIVATE_KEY }}
 
       - name: Code Checkout
         uses: actions/checkout@v3.1.0
