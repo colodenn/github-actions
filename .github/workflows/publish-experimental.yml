@@ -40,7 +40,6 @@ jobs:
         uses: colodenn/github-actions/.github/actions/bump-version@main
         with:
           package_dir: './'
-          npm_token_read_and_write: ${{ secrets.NPM_TOKEN_READ_AND_WRITE }}
 
       - name: Get package name from package.json
         id: package-name
