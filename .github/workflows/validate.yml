@@ -1,12 +1,15 @@
+# File: .github/workflows/validate.yml
+
 name: Validate
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_call:
+    inputs:
+      package_dir:
+        description: 'Directory of the package to validate'
+        required: false
+        default: './'
+        type: string
 
 jobs:
   lint:
@@ -22,10 +25,14 @@ jobs:
           bun-version: 1.1.27
 
       - name: Install Dependencies
-        run: bun install
+        run: |
+          cd ${{ inputs.package_dir }}
+          bun install
 
       - name: Lint
-        run: bun run lint
+        run: |
+          cd ${{ inputs.package_dir }}
+          bun run lint
 
   test:
     name: Testing
@@ -40,7 +47,11 @@ jobs:
           bun-version: 1.1.27
 
       - name: Install Dependencies
-        run: bun install
+        run: |
+          cd ${{ inputs.package_dir }}
+          bun install
 
       - name: Test
-        run: bun test
+        run: |
+          cd ${{ inputs.package_dir }}
+          bun test
