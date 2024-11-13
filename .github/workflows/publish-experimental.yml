@@ -41,7 +41,7 @@ jobs:
         run: bun run build
         
       - name: Bump Package
-        uses: ./.github/actions/bump-version
+        uses: .github/actions/bump-version
 
       - name: Get package name from package.json
         id: package-name
