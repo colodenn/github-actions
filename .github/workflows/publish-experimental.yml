@@ -8,10 +8,6 @@ on:
         required: false
         default: './'
         type: string
-    secrets:
-      NPM_TOKEN_READ_AND_WRITE:
-        description: 'NPM token with read and write permissions'
-        required: true
 
 jobs:
   deploy:
