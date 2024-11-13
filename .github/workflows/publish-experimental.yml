@@ -41,7 +41,7 @@ jobs:
         run: bun run build
         
       - name: Bump Package
-        uses: .github/actions/bump-version
+        uses: colodenn/github-actions/.github/actions/bump-version@main
 
       - name: Get package name from package.json
         id: package-name
