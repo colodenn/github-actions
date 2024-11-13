@@ -49,9 +49,9 @@ runs:
     - name: Publish to npm
       shell: bash
       env:
-        NPM_TOKEN: ${{ secrets.NPM_TOKEN_READ_AND_WRITE }}
+        NPM_TOKEN_READ_AND_WRITE: ${{ secrets.NPM_TOKEN_READ_AND_WRITE }}
       run: |
         cd ${{ inputs.package_dir }}
         # Authenticate with npm registry
-        echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_READ_AND_WRITE }}" > ~/.npmrc
+        echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN_READ_AND_WRITE }}" > ~/.npmrc
         npm publish --tag="${VERSION_TAG}"
