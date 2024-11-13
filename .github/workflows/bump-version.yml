@@ -1,5 +1,4 @@
 name: Publish Experimental Packages
-description: Bumps the version of an npm package and publishes it with an experimental tag.
 
 on:
   workflow_call:
@@ -8,11 +7,12 @@ on:
         description: Directory of the Package to Publish
         required: true
         default: './'
+        type: string
 
-outputs:
-  VERSION_TAG:
-    description: Generated Experimental Version Tag for This Package
-    value: ${{ jobs.publish.outputs.VERSION_TAG }}
+    outputs:
+        VERSION_TAG:
+            description: Generated Experimental Version Tag for This Package
+            value: ${{ jobs.publish.outputs.VERSION_TAG }}
 
 jobs:
   publish:
