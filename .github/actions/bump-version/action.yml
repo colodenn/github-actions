@@ -6,6 +6,9 @@ inputs:
     description: Directory of the Package to Publish
     required: true
     default: './'
+  npm_token_read_and_write:
+    description: NPM token with read and write permissions
+    required: true
 
 outputs:
   VERSION_TAG:
@@ -49,9 +52,9 @@ runs:
     - name: Publish to npm
       shell: bash
       env:
-        NPM_TOKEN_READ_AND_WRITE: ${{ secrets.NPM_TOKEN_READ_AND_WRITE }}
+        NPM_TOKEN_READ_AND_WRITE: ${{ inputs.npm_token_read_and_write }}
       run: |
-        cd ${{ inputs.package_dir }}
-        # Authenticate with npm registry
-        echo "//registry.npmjs.org/:_authToken=${{ env.NPM_TOKEN_READ_AND_WRITE }}" > ~/.npmrc
-        npm publish --tag="${VERSION_TAG}"
+          cd ${{ inputs.package_dir }}
+          # Authenticate with npm registry
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN_READ_AND_WRITE}" > ~/.npmrc
+          npm publish --tag="${VERSION_TAG}"
