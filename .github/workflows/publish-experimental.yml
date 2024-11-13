@@ -8,6 +8,9 @@ on:
         required: false
         default: './'
         type: string
+    secrets:
+      NPM_TOKEN:
+        required: true
 
 jobs:
   deploy:
@@ -25,7 +28,7 @@ jobs:
         uses: actions/setup-node@v3.5.1
 
       - name: Configure NPM Auth
-        run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN_READ_AND_WRITE }}' > ~/.npmrc
+        run: echo '//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}' > ~/.npmrc
 
       - name: Set up Bun
         uses: oven-sh/setup-bun@v1
