@@ -9,9 +9,10 @@ on:
         required: true
         default: './'
 
-    outputs:
-      VERSION_TAG:
-        description: Generated Experimental Version Tag for This Package
+outputs:
+  VERSION_TAG:
+    description: Generated Experimental Version Tag for This Package
+    value: ${{ jobs.publish.outputs.VERSION_TAG }}
 
 jobs:
   publish:
@@ -27,7 +28,8 @@ jobs:
         shell: bash
         run: |
           BRANCH_NAME=$(echo ${GITHUB_HEAD_REF:-$GITHUB_REF_NAME} | sed -r 's/([a-z0-9])([A-Z])/\1-\L\2/g' | sed 's/_/-/g' | sed 's/\//-/g')
-          echo "VERSION_TAG=${BRANCH_NAME}-experimental" >> $GITHUB_ENV
+          VERSION_TAG="${BRANCH_NAME}-experimental"
+          echo "VERSION_TAG=${VERSION_TAG}" >> $GITHUB_ENV
           echo "VERSION_TAG=${VERSION_TAG}"
           echo "VERSION_TAG=${VERSION_TAG}" >> $GITHUB_OUTPUT
 
